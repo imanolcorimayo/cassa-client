@@ -20,7 +20,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 10 ,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
