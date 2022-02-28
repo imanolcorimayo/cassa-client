@@ -1,4 +1,4 @@
-import {} from "react";
+//import {} from "react";
 
 import { View, Text } from "./Themed";
 import { Image } from "react-native";
@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         alignItems: 'center',
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: 110,
+        marginLeft: 20,
     },
     container_text: {
         marginLeft: 10,
