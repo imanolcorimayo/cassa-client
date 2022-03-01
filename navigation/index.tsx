@@ -16,7 +16,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
-import Ventas from '../screens/Ventas'
+import Ventas from '../screens/Ventas';
+import Fiados from '../screens/Fiados';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -89,7 +90,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
+        component={Fiados}
         options={{
           title: 'Fiados',
           tabBarIcon: ({ color }) => <TabBarIcon name="handshake-o" color={color} />,
