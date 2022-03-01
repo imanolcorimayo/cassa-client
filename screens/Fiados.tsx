@@ -8,6 +8,7 @@ import { View, Text, } from '../components/Themed';
 import { TextInput, ScrollView } from 'react-native';
 import CommerceAvatar from '../components/CommerceAvatar';
 import Fiado from '../components/Fiados/Fiado';
+import Ordenar from '../components/Generales/Ordenar';
 import Add from '../components/Fiados/Add';
 
 export default function Fiados({ navigation }: RootTabScreenProps<'TabThree'>) {
@@ -19,7 +20,7 @@ export default function Fiados({ navigation }: RootTabScreenProps<'TabThree'>) {
     <View style={styles.container}>
         <Add></Add>
         <CommerceAvatar/>
-        <View style={styles.containerInput}>
+        {/* <View style={styles.containerInput}>
             <Text>Escribe palabras clave...</Text>
             <TextInput
             style={styles.input}
@@ -27,8 +28,9 @@ export default function Fiados({ navigation }: RootTabScreenProps<'TabThree'>) {
             value={number}
             placeholder="useless placeholder"
             />
-        </View>
-        <Text>Pendientes ...</Text>
+        </View> */}
+        <Ordenar></Ordenar>
+        <Text style={styles.subTitles}>Pendientes ...</Text>
         <ScrollView style={styles.containerScroll}>
             {
                 arr.map((el) => {
@@ -39,7 +41,7 @@ export default function Fiados({ navigation }: RootTabScreenProps<'TabThree'>) {
             }
             <Text></Text>
         </ScrollView>
-        <Text>Historial ...</Text>
+        <Text style={styles.subTitles}>Historial ...</Text>
         <View style={styles.containerScroll}>
             <ScrollView>
                 {
@@ -60,25 +62,30 @@ const styles = StyleSheet.create({
     container: {
 
     },
-    input: {
-      height: 40,
-      width: 350,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      backgroundColor: 'white',
-      borderRadius: 15
-    },
-    containerInput: {
-        padding: 10,
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: '#bbb'
-    },
+    // input: {
+    //   height: 40,
+    //   width: 350,
+    //   margin: 12,
+    //   borderWidth: 1,
+    //   padding: 10,
+    //   backgroundColor: 'white',
+    //   borderRadius: 15
+    // },
+    // containerInput: {
+    //     padding: 10,
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     backgroundColor: '#bbb'
+    // },
     containerScroll: {
         display: 'flex',
         backgroundColor:'#bbb',
         padding: 5,
-        height: 200,
+        height: 224,
+    },
+    subTitles: {
+        fontSize: 20,
+        backgroundColor: '#bbb',
+        paddingLeft: 15
     }
 });

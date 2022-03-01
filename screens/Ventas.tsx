@@ -8,6 +8,7 @@ import { View, Text, } from '../components/Themed';
 import { TextInput, ScrollView } from 'react-native';
 import CommerceAvatar from '../components/CommerceAvatar';
 import Venta from '../components/Ventas/Venta';
+import Ordenar from '../components/Generales/Ordenar';
 import Add from '../components/Ventas/Add';
 
 export default function Ventas({ navigation }: RootTabScreenProps<'TabThree'>) {
@@ -28,6 +29,7 @@ export default function Ventas({ navigation }: RootTabScreenProps<'TabThree'>) {
             placeholder="useless placeholder"
             />
         </View>
+        <Ordenar></Ordenar>
         <ScrollView style={styles.containerScroll}>
             {
                 arr.map((el) => {
