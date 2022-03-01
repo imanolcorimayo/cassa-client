@@ -19,6 +19,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import Ventas from '../screens/Ventas';
 import Fiados from '../screens/Fiados';
 import Estadisticas from '../screens/Estadisticas';
+import Productos from '../screens/Productos';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -115,7 +116,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFive"
-        component={TabTwoScreen}
+        component={Productos}
         options={{
           title: 'Productos/Stock',
           tabBarIcon: ({ color }) => <TabBarIcon name="table" color={color} />,
