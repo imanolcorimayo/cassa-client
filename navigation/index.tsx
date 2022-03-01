@@ -18,6 +18,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import Ventas from '../screens/Ventas';
 import Fiados from '../screens/Fiados';
+import Estadisticas from '../screens/Estadisticas';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -106,7 +107,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFour"
-        component={TabTwoScreen}
+        component={Estadisticas}
         options={{
           title: 'Estadísticas',
           tabBarIcon: ({ color }) => <Ionicons size={25} style={{ marginBottom: -3 }} name="stats-chart" color={color} />,

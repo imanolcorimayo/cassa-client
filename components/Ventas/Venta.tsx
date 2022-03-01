@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         width: 390,
         height: 80,
-        backgroundColor: '#ccc',
+        backgroundColor: '#555',
         margin: 5,
+        borderRadius: 10,
     },
     containerFecha: {
         margin: 5
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#ccc'
+        backgroundColor: '#555'
     },
   });

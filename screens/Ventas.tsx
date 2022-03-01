@@ -61,11 +61,9 @@ const styles = StyleSheet.create({
         padding: 10,
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#bbb'
     },
     containerScroll: {
         display: 'flex',
-        backgroundColor:'#bbb',
         padding: 5,
         marginBottom: 220,
     }

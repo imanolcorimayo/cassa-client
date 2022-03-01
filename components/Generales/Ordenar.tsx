@@ -29,7 +29,6 @@ export default function Ordenar() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#bbb',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
