@@ -18,7 +18,7 @@ export default function Producto() {
                     <Text>Nombre</Text>
                 </View>
                 <View>
-                    <Text>Stok:</Text>
+                    <Text style={styles.text }>Stok:</Text>
                     <Text>50 kg</Text>
                 </View>
                 <View style={styles.button}>
@@ -62,4 +62,7 @@ const styles = StyleSheet.create({
       height: 70,
       borderRadius: 5,
     },
+    text: {
+        backgroundColor: '#555'
+    }
   });

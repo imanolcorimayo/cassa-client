@@ -68,7 +68,7 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
         {/* Buttons */}
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
@@ -89,7 +89,7 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
-      />
+      /> */}
       <BottomTab.Screen
         name="TabTwo"
         component={Fiados}
