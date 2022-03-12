@@ -15,11 +15,11 @@ export default function Producto() {
                         }}
 
                     />
-                    <Text>Nombre</Text>
+                    <Text style={styles.text }>Nombre</Text>
                 </View>
                 <View>
                     <Text style={styles.text }>Stok:</Text>
-                    <Text>50 kg</Text>
+                    <Text style={styles.text }>50 kg</Text>
                 </View>
                 <View style={styles.button}>
                     <Button
