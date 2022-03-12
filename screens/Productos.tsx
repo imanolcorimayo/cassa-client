@@ -1,55 +1,64 @@
-import { StyleSheet } from 'react-native';
-import React from 'react';
+import { StyleSheet } from "react-native";
+import React from "react";
 
-import { RootTabScreenProps } from '../types';
+import { RootTabScreenProps } from "../types";
 
 // Components
-import { View, Text, } from '../components/Themed';
-import { TextInput, ScrollView, Button, Alert } from 'react-native';
-import CommerceAvatar from '../components/CommerceAvatar';
-import Producto from '../components/Productos/Producto';
-import Ordenar from '../components/Generales/Ordenar';
+import { View, Text } from "../components/Themed";
+import { TextInput, ScrollView, Button, Alert } from "react-native";
+import CommerceAvatar from "../components/CommerceAvatar";
+import Producto from "../components/Productos/Producto";
+import Ordenar from "../components/Generales/Ordenar";
 
-export default function Productos({ navigation }: RootTabScreenProps<'TabThree'>) {
-    const [number, onChangeNumber] = React.useState("something");
-    const arr = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-    ]
+import axios from "axios";
+
+export default function Productos({
+    navigation,
+}: RootTabScreenProps<"TabThree">) {
+    const [product, setProducts] = React.useState([]);
+
+    React.useEffect(() => {
+        (async function () {
+            try {
+                const { data } = await axios.get(
+                    "http://192.168.0.230:3001/product"
+                );
+                setProducts(data);
+            } catch (error) {
+                alert("we cant connect with server");
+                console.log(error);
+            }
+        })();
+    });
+
     return (
-        <View style={styles.container}>
+        <View>
             <CommerceAvatar />
-            <View>
-                <View>
+            <View style={styles.topButtonsContainer}>
+                <View style={styles.topButtons}>
                     <Button
                         title="Productos/Stock"
-                        onPress={() => Alert.alert('Button with adjusted color pressed')}
+                        color={"#51f"}
+                        onPress={() =>
+                            Alert.alert("Button with adjusted color pressed")
+                        }
                     />
                 </View>
-                <View>
+                <View style={styles.topButtons}>
                     <Button
                         title="Historial de compra"
-                        onPress={() => Alert.alert('Button with adjusted color pressed')}
+                        color={"#51f"}
+                        onPress={() =>
+                            Alert.alert("Button with adjusted color pressed")
+                        }
                     />
                 </View>
             </View>
-            {/* <View style={styles.containerInput}>
-                <Text>Escribe palabras clave...</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={onChangeNumber}
-                    value={number}
-                    placeholder="useless placeholder"
-                />
-            </View> */}
             <Ordenar></Ordenar>
             <ScrollView style={styles.containerScroll}>
-                {
-                    arr.map((el) => {
-                        return (
-                            <Producto key={el}></Producto>
-                        )
-                    })
-                }
+                {product.map((el, index) => {
+                    return <Producto key={index}></Producto>;
+                })}
                 <Text></Text>
             </ScrollView>
         </View>
@@ -57,8 +66,13 @@ export default function Productos({ navigation }: RootTabScreenProps<'TabThree'>
 }
 
 const styles = StyleSheet.create({
-    container: {
-
+    topButtonsContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    topButtons: {
+        margin: 5,
     },
     input: {
         height: 40,
@@ -66,17 +80,17 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        backgroundColor: 'white',
-        borderRadius: 15
+        backgroundColor: "white",
+        borderRadius: 15,
     },
     containerInput: {
         padding: 10,
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
     },
     containerScroll: {
-        display: 'flex',
+        display: "flex",
         padding: 5,
         marginBottom: 220,
-    }
+    },
 });
