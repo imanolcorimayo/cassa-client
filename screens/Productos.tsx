@@ -5,12 +5,26 @@ import { RootTabScreenProps } from "../types";
 
 // Components
 import { View, Text } from "../components/Themed";
-import { TextInput, ScrollView, Button, Alert } from "react-native";
+import { ScrollView, Button, Alert } from "react-native";
+import { Link } from "@react-navigation/native";
 import CommerceAvatar from "../components/CommerceAvatar";
 import Producto from "../components/Productos/Producto";
 import Ordenar from "../components/Generales/Ordenar";
 
+// Modules
 import axios from "axios";
+
+interface Product {
+    buy_unit: String;
+    createdAt: String;
+    id: Number;
+    name: String;
+    price: String;
+    quantity: Number;
+    sell_unit: String;
+    type: String;
+    updatedAt: String;
+}
 
 export default function Productos({
     navigation,
@@ -25,7 +39,7 @@ export default function Productos({
                 );
                 setProducts(data);
             } catch (error) {
-                alert("we cant connect with server");
+                //alert("we cant connect with server");
                 console.log(error);
             }
         })();
@@ -34,6 +48,14 @@ export default function Productos({
     return (
         <View>
             <CommerceAvatar />
+            <View style={styles.addButton}>
+                <Button
+                    title="Add product"
+                    onPress={() => Alert.alert("some")}
+                />
+
+                <Link to={{ screen: "AddProduct" }}>Go to Jane's profile</Link>
+            </View>
             <View style={styles.topButtonsContainer}>
                 <View style={styles.topButtons}>
                     <Button
@@ -56,8 +78,15 @@ export default function Productos({
             </View>
             <Ordenar></Ordenar>
             <ScrollView style={styles.containerScroll}>
-                {product.map((el, index) => {
-                    return <Producto key={index}></Producto>;
+                {product.map((el: Product, index) => {
+                    return (
+                        <Producto
+                            key={index}
+                            name={el.name}
+                            stock={el.quantity}
+                            sellUnit={el.sell_unit}
+                        ></Producto>
+                    );
                 })}
                 <Text></Text>
             </ScrollView>
@@ -92,5 +121,13 @@ const styles = StyleSheet.create({
         display: "flex",
         padding: 5,
         marginBottom: 220,
+    },
+    addButton: {
+        position: "absolute",
+        bottom: 20,
+        left: 0,
+        right: 0,
+        marginLeft: "auto",
+        marginRight: "auto",
     },
 });
