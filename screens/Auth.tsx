@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
@@ -12,13 +12,26 @@ const Auth = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential;
+                console.log(user);
             })
             .catch((error) => {
                 console.error(error);
             });
     };
 
-    const handleLogin = () => {};
+    const handleLogin = () => {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                console.error(error);
+                const errorMessage = error.message;
+            });
+    };
 
     return (
         <View style={styles.container}>
