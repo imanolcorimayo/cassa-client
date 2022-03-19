@@ -6,14 +6,13 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-    NavigationContainer,
-    DefaultTheme,
-    DarkTheme,
-} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, StyleSheet } from "react-native";
+
+// React Navigation
+import { Link } from "@react-navigation/native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -26,12 +25,10 @@ import Productos from "../screens/Productos";
 import AddProduct from "../screens/product/AddProduct";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import { View } from "../components/Themed";
+import Auth from "../screens/Auth";
 
-export default function Navigation({
-    colorScheme,
-}: {
-    colorScheme: ColorSchemeName;
-}) {
+export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
@@ -56,17 +53,20 @@ function RootNavigator() {
                 component={BottomTabNavigator}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name="NotFound"
-                component={NotFoundScreen}
-                options={{ title: "Oops!" }}
-            />
+            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
 
             <Stack.Screen
                 name="AddProduct"
                 component={AddProduct}
                 options={{
                     title: "Añadir nuevo Producto",
+                }}
+            />
+            <Stack.Screen
+                name="Auth"
+                component={Auth}
+                options={{
+                    title: "inicia sesion o registrate",
                 }}
             />
             <Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -87,9 +87,16 @@ function BottomTabNavigator() {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="TabOne"
+            initialRouteName="TabThree"
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme].tint,
+                headerRight: (props) => (
+                    <View>
+                        <Link style={styles.auth} to={{ screen: "Auth" }}>
+                            Iniciar Sesion
+                        </Link>
+                    </View>
+                ),
             }}
         >
             {/* Buttons */}
@@ -120,9 +127,7 @@ function BottomTabNavigator() {
                 component={Fiados}
                 options={{
                     title: "Fiados",
-                    tabBarIcon: ({ color }) => (
-                        <TabBarIcon name="handshake-o" color={color} />
-                    ),
+                    tabBarIcon: ({ color }) => <TabBarIcon name="handshake-o" color={color} />,
                 }}
             />
             <BottomTab.Screen
@@ -130,9 +135,7 @@ function BottomTabNavigator() {
                 component={Ventas}
                 options={{
                     title: "Ventas",
-                    tabBarIcon: ({ color }) => (
-                        <TabBarIcon name="dollar" color={color} />
-                    ),
+                    tabBarIcon: ({ color }) => <TabBarIcon name="dollar" color={color} />,
                 }}
             />
             <BottomTab.Screen
@@ -155,9 +158,7 @@ function BottomTabNavigator() {
                 component={Productos}
                 options={{
                     title: "Productos/Stock",
-                    tabBarIcon: ({ color }) => (
-                        <TabBarIcon name="table" color={color} />
-                    ),
+                    tabBarIcon: ({ color }) => <TabBarIcon name="table" color={color} />,
                 }}
             />
         </BottomTab.Navigator>
@@ -173,3 +174,9 @@ function TabBarIcon(props: {
 }) {
     return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+    auth: {
+        color: "white",
+    },
+});

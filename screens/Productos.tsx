@@ -26,20 +26,16 @@ interface Product {
     updatedAt: String;
 }
 
-export default function Productos({
-    navigation,
-}: RootTabScreenProps<"TabThree">) {
+export default function Productos({ navigation }: RootTabScreenProps<"TabThree">) {
     const [product, setProducts] = React.useState([]);
 
     React.useEffect(() => {
         (async function () {
             try {
-                const { data } = await axios.get(
-                    "http://192.168.0.230:3001/product"
-                );
+                const { data } = await axios.get("http://192.168.0.230:3001/product");
                 setProducts(data);
             } catch (error) {
-                //alert("we cant connect with server");
+                //alert("we can't connect with server");
                 console.log(error);
             }
         })();
@@ -49,10 +45,7 @@ export default function Productos({
         <View>
             <CommerceAvatar />
             <View style={styles.addButton}>
-                <Button
-                    title="Add product"
-                    onPress={() => Alert.alert("some")}
-                />
+                <Button title="Add product" onPress={() => Alert.alert("some")} />
 
                 <Link to={{ screen: "AddProduct" }}>Go to Jane's profile</Link>
             </View>
@@ -61,18 +54,14 @@ export default function Productos({
                     <Button
                         title="Productos/Stock"
                         color={"#51f"}
-                        onPress={() =>
-                            Alert.alert("Button with adjusted color pressed")
-                        }
+                        onPress={() => Alert.alert("Button with adjusted color pressed")}
                     />
                 </View>
                 <View style={styles.topButtons}>
                     <Button
                         title="Historial de compra"
                         color={"#51f"}
-                        onPress={() =>
-                            Alert.alert("Button with adjusted color pressed")
-                        }
+                        onPress={() => Alert.alert("Button with adjusted color pressed")}
                     />
                 </View>
             </View>
