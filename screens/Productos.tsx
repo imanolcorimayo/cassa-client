@@ -14,6 +14,10 @@ import Ordenar from "../components/Generales/Ordenar";
 // Modules
 import axios from "axios";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../redux/actions";
+
 interface Product {
     buy_unit: String;
     createdAt: String;
@@ -27,6 +31,9 @@ interface Product {
 }
 
 export default function Productos({ navigation }: RootTabScreenProps<"TabThree">) {
+    const dispatch = useDispatch();
+    const products: any = useSelector((state: any) => state.products);
+
     const [product, setProducts] = React.useState([]);
 
     React.useEffect(() => {
@@ -39,7 +46,12 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
                 console.log(error);
             }
         })();
-    });
+        dispatch(getProducts());
+    }, []);
+
+    React.useEffect(() => {
+        console.log(products);
+    }, [products]);
 
     return (
         <View>
@@ -64,18 +76,19 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
                         onPress={() => Alert.alert("Button with adjusted color pressed")}
                     />
                 </View>
+
+                <View style={styles.topButtons}>
+                    <Button
+                        title={products}
+                        color={"#51f"}
+                        onPress={() => Alert.alert("Button with adjusted color pressed")}
+                    />
+                </View>
             </View>
             <Ordenar></Ordenar>
             <ScrollView style={styles.containerScroll}>
                 {product.map((el: Product, index) => {
-                    return (
-                        <Producto
-                            key={index}
-                            name={el.name}
-                            stock={el.quantity}
-                            sellUnit={el.sell_unit}
-                        ></Producto>
-                    );
+                    return <Producto key={index} name={el.name} stock={el.quantity} sellUnit={el.sell_unit}></Producto>;
                 })}
                 <Text></Text>
             </ScrollView>
