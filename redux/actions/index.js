@@ -1,24 +1,23 @@
+import axios from 'axios';
+
 import { 
   GET_PRODUCTS, 
   RESTORE_STATE,
  } from '../constants.js'
 
 export function getProducts() {
-  return {
-    type: GET_PRODUCTS,
-    payload: "This is the test product",
-  };
-  /* return async function (dispatch) {
+  return async function (dispatch) {
     try {
-      const data = "This is the test product"
-      dispatch({
-        type: GET_PRODUCTS, 
-        payload: data
+      const { data } = await axios.get("http://192.168.0.230:3001/product");
+      dispatch( {
+        type: GET_PRODUCTS,
+        payload: data,
       })
     } catch (error) {
-      console.log(error)
+      //alert("we can't connect with server");
+      console.log(error);
     }
-  } */
+  }
 }
 
 // restore state

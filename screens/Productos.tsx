@@ -37,20 +37,12 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
     const [product, setProducts] = React.useState([]);
 
     React.useEffect(() => {
-        (async function () {
-            try {
-                const { data } = await axios.get("http://192.168.0.230:3001/product");
-                setProducts(data);
-            } catch (error) {
-                //alert("we can't connect with server");
-                console.log(error);
-            }
-        })();
         dispatch(getProducts());
     }, []);
 
     React.useEffect(() => {
         console.log(products);
+        setProducts(products);
     }, [products]);
 
     return (
@@ -72,14 +64,6 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
                 <View style={styles.topButtons}>
                     <Button
                         title="Historial de compra"
-                        color={"#51f"}
-                        onPress={() => Alert.alert("Button with adjusted color pressed")}
-                    />
-                </View>
-
-                <View style={styles.topButtons}>
-                    <Button
-                        title={products}
                         color={"#51f"}
                         onPress={() => Alert.alert("Button with adjusted color pressed")}
                     />

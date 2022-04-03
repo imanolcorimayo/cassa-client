@@ -4,7 +4,7 @@ import {
 } from '../constants.js'
 
 const initialState = {
-    products: "Somee",
+    products: [],
 };
 
 function rootReducer(state = initialState, action) {
