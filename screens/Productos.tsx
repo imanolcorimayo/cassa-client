@@ -1,12 +1,10 @@
-import { StyleSheet } from "react-native";
 import React from "react";
 
 import { RootTabScreenProps } from "../types";
 
 // Components
+import { ScrollView, Button, Alert, Dimensions, Pressable, StyleSheet } from "react-native";
 import { View, Text } from "../components/Themed";
-import { ScrollView, Button, Alert } from "react-native";
-import { Link } from "@react-navigation/native";
 import CommerceAvatar from "../components/CommerceAvatar";
 import Producto from "../components/Productos/Producto";
 import Ordenar from "../components/Generales/Ordenar";
@@ -37,22 +35,21 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
     const [product, setProducts] = React.useState([]);
 
     React.useEffect(() => {
-        dispatch(getProducts());
+        if (!product.length) dispatch(getProducts());
     }, []);
 
     React.useEffect(() => {
-        console.log(products);
         setProducts(products);
     }, [products]);
 
     return (
-        <View>
-            <CommerceAvatar />
+        <View style={styles.container}>
             <View style={styles.addButton}>
-                <Button title="Add product" onPress={() => Alert.alert("some")} />
-
-                <Link to={{ screen: "AddProduct" }}>Go to Jane's profile</Link>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("AddProduct")}>
+                    <Text>Añadir producto</Text>
+                </Pressable>
             </View>
+            <CommerceAvatar />
             <View style={styles.topButtonsContainer}>
                 <View style={styles.topButtons}>
                     <Button
@@ -74,13 +71,15 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
                 {product.map((el: Product, index) => {
                     return <Producto key={index} name={el.name} stock={el.quantity} sellUnit={el.sell_unit}></Producto>;
                 })}
-                <Text></Text>
             </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        height: Dimensions.get("window").height,
+    },
     topButtonsContainer: {
         display: "flex",
         flexDirection: "row",
@@ -106,14 +105,22 @@ const styles = StyleSheet.create({
     containerScroll: {
         display: "flex",
         padding: 5,
-        marginBottom: 220,
+        marginBottom: 180,
     },
     addButton: {
         position: "absolute",
-        bottom: 20,
-        left: 0,
-        right: 0,
-        marginLeft: "auto",
-        marginRight: "auto",
+        bottom: 120,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+    },
+    button: {
+        width: Dimensions.get("window").width * 0.7,
+        backgroundColor: "#51f",
+        height: 40,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 15,
     },
 });
