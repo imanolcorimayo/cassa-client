@@ -34,17 +34,16 @@ export default function AddProductos(props: Props) {
         buyUnit: "cajones",
         sellUnit: "cajones",
         buyPrice: "",
-        type: "",
         sellPrice: "",
         quantity: 0,
-        id: 0,
     });
 
     React.useEffect(() => {
-        if (props.route.params.update) setForm(props.route.params.product);
+        if (props.route.params && props.route.params.update) setForm(props.route.params?.product);
     }, []);
 
     async function onPressHandler() {
+        console.log("FORRRRM: ", form);
         for (const key in form) {
             // @ts-ignore
             if (key !== "image" && !form[key]) return Alert.alert("Por favor completa todos los campos");
@@ -86,6 +85,26 @@ export default function AddProductos(props: Props) {
         }
     }
 
+    async function deleteProduct() {
+        try {
+            const data = await axios.delete("http://192.168.0.230:3001/product", {
+                headers: {
+                    id: props.route.params?.product.id,
+                },
+            });
+            if ((data.status = 200)) {
+                Alert.alert("El producto fue eliminado exitosamente");
+            } else if ((data.status = 404)) {
+                Alert.alert("El producto ya fue eliminado o no existe en la base de datos");
+            }
+            dispatch(getProducts());
+            props.navigation.navigate("TabFive");
+        } catch (error) {
+            console.error(error);
+            Alert.alert("Algo salio mal con el servidor. Por favor trate de nuevo mas tarde o contactenos");
+        }
+    }
+
     return (
         <View style={styles.containerInput}>
             <View style={styles.containerInputImage}>
@@ -117,6 +136,7 @@ export default function AddProductos(props: Props) {
             <View style={styles.quantityContainer}>
                 <Text>Cantidad</Text>
                 <View style={styles.quantity}>
+                    {/* TODO fix render "0" when we try to update the product */}
                     <NumericInput
                         value={form.quantity}
                         onChange={(quantity) => {
@@ -176,8 +196,9 @@ export default function AddProductos(props: Props) {
                 </View>
             </View>
             {props.route.params?.update ? (
-                <View style={styles.buttonContainer}>
+                <View style={styles.buttonEditContainer}>
                     <Button onPress={updateHandler} title="Editar producto" color="#841584" />
+                    <Button onPress={deleteProduct} title="Eliminar producto" color="#f90034" />
                 </View>
             ) : (
                 <View style={styles.buttonContainer}>
@@ -293,5 +314,14 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         overflow: "hidden",
         backgroundColor: "#fff",
+    },
+
+    buttonEditContainer: {
+        width: "100%",
+        borderRadius: 7,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
     },
 });
