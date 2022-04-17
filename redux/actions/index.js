@@ -3,6 +3,7 @@ import axios from 'axios';
 import { 
   GET_PRODUCTS, 
   RESTORE_STATE,
+  SHOW_PRODUCT_MODAL
  } from '../constants.js'
 
 export function getProducts() {
@@ -25,5 +26,13 @@ export function restoreState() {
   return {
     type: RESTORE_STATE,
     payload: [],
+  };
+}
+
+// Change visibility of modal
+export function showProductModal(id) {
+  return {
+    type: SHOW_PRODUCT_MODAL,
+    payload: id?id:[],
   };
 }

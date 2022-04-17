@@ -2,7 +2,13 @@ import { View, Text } from "../Themed";
 
 import { StyleSheet, Button, Alert, Image } from "react-native";
 
+// Redux
+
+import { showProductModal } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+
 interface Props {
+    id: Number;
     name: String;
     stock: Number;
     sellUnit: String;
@@ -10,6 +16,8 @@ interface Props {
 }
 
 export default function Producto(props: Props) {
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.container}>
             <View style={styles.containerBottom}>
@@ -21,34 +29,19 @@ export default function Producto(props: Props) {
                             uri: "https://t2.uc.ltmcdn.com/images/4/0/5/cuales_son_las_frutas_de_invierno_7504_600.jpg",
                         }}
                     />
-                    <Text style={styles.text}>{props.name}</Text>
                 </View>
-                <View>
-                    <Text style={styles.text}>Stok:</Text>
-                    <Text style={styles.text}>
-                        {props.stock} {props.sellUnit}
+                <View style={styles.containerText}>
+                    <Text style={styles.textName}>{props.name}</Text>
+                    <Text>
+                        Stok: {props.stock} {props.sellUnit}
                     </Text>
                 </View>
                 <View style={styles.buttons}>
                     <View style={styles.button}>
-                        <Button
-                            title="Detalles"
-                            onPress={() =>
-                                Alert.alert(
-                                    "Button with adjusted color pressed"
-                                )
-                            }
-                        />
+                        <Button title="Detalles" onPress={() => dispatch(showProductModal(props.id))} />
                     </View>
                     <View style={styles.button}>
-                        <Button
-                            title="Editar"
-                            onPress={() =>
-                                Alert.alert(
-                                    "Button with adjusted color pressed"
-                                )
-                            }
-                        />
+                        <Button title="Editar" onPress={() => Alert.alert("Button with adjusted color pressed")} />
                     </View>
                 </View>
             </View>
@@ -76,16 +69,23 @@ const styles = StyleSheet.create({
     containerBottom: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
+        marginRight: 5,
         alignItems: "center",
         backgroundColor: "#555",
     },
     logo: {
-        width: 90,
-        height: 70,
+        width: 120,
+        height: "100%",
         borderRadius: 5,
     },
-    text: {
+    // Container text
+    containerText: {
         backgroundColor: "#555",
+        width: 120,
+    },
+    textName: {
+        fontSize: 16,
+        marginBottom: 8,
     },
 });
