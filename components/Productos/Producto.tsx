@@ -50,7 +50,21 @@ export default function Producto(props: Props) {
                     <View style={styles.button}>
                         <Button
                             title="Editar"
-                            onPress={() => props.navigation.navigate("AddProduct", { update: true, product: props })}
+                            onPress={() =>
+                                props.navigation.navigate("AddProduct", {
+                                    update: true,
+                                    product: {
+                                        id: props.id,
+                                        name: props.name,
+                                        sellUnit: props.sellUnit,
+                                        buyUnit: props.buyUnit,
+                                        buyPrice: props.buyPrice,
+                                        sellPrice: props.sellPrice,
+                                        type: props.type,
+                                        quantity: props.quantity,
+                                    },
+                                })
+                            }
                         />
                     </View>
                 </View>
