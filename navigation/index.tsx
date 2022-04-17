@@ -30,10 +30,7 @@ import Auth from "../screens/Auth";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
-        <NavigationContainer
-            linking={LinkingConfiguration}
-            theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
+        <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <RootNavigator />
         </NavigationContainer>
     );
@@ -48,18 +45,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen
-                name="Root"
-                component={BottomTabNavigator}
-                options={{ headerShown: false }}
-            />
+            <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
 
             <Stack.Screen
                 name="AddProduct"
                 component={AddProduct}
                 options={{
-                    title: "Añadir nuevo Producto",
+                    title: "Producto",
                 }}
             />
             <Stack.Screen
@@ -144,12 +137,7 @@ function BottomTabNavigator() {
                 options={{
                     title: "Estadísticas",
                     tabBarIcon: ({ color }) => (
-                        <Ionicons
-                            size={25}
-                            style={{ marginBottom: -3 }}
-                            name="stats-chart"
-                            color={color}
-                        />
+                        <Ionicons size={25} style={{ marginBottom: -3 }} name="stats-chart" color={color} />
                     ),
                 }}
             />
@@ -168,10 +156,7 @@ function BottomTabNavigator() {
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: {
-    name: React.ComponentProps<typeof FontAwesome>["name"];
-    color: string;
-}) {
+function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
     return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
 }
 

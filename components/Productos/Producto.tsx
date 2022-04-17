@@ -1,9 +1,10 @@
 import { View, Text } from "../Themed";
 
-import { StyleSheet, Button, Alert, Image } from "react-native";
+import { StyleSheet, Button, Alert, Image, Modal } from "react-native";
+
+import { RootTabScreenProps } from "../../types";
 
 // Redux
-
 import { showProductModal } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -12,7 +13,13 @@ interface Props {
     name: String;
     stock: Number;
     sellUnit: String;
+    buyUnit: String;
+    buyPrice: String;
+    sellPrice: String;
+    type: String;
     key: Number;
+    quantity: Number;
+    navigation: any;
 }
 
 export default function Producto(props: Props) {
@@ -41,7 +48,10 @@ export default function Producto(props: Props) {
                         <Button title="Detalles" onPress={() => dispatch(showProductModal(props.id))} />
                     </View>
                     <View style={styles.button}>
-                        <Button title="Editar" onPress={() => Alert.alert("Button with adjusted color pressed")} />
+                        <Button
+                            title="Editar"
+                            onPress={() => props.navigation.navigate("AddProduct", { update: true, product: props })}
+                        />
                     </View>
                 </View>
             </View>

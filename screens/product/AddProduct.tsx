@@ -17,17 +17,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../../redux/actions";
 
-interface Form {
-    name: string;
-    category: string;
-    image: string;
-    buyUnit: string;
-    sellUnit: string;
-    buyPrice: string;
-    sellPrice: string;
+interface Props {
+    route: any;
+    navigation: any;
 }
 
-export default function AddProductos({ navigation }: RootTabScreenProps<"TabFive">) {
+export default function AddProductos(props: Props) {
     // TODO get information of category and units from database and button with add category/units
 
     const dispatch = useDispatch();
@@ -39,12 +34,17 @@ export default function AddProductos({ navigation }: RootTabScreenProps<"TabFive
         buyUnit: "cajones",
         sellUnit: "cajones",
         buyPrice: "",
+        type: "",
         sellPrice: "",
         quantity: 0,
+        id: 0,
     });
 
+    React.useEffect(() => {
+        if (props.route.params.update) setForm(props.route.params.product);
+    }, []);
+
     async function onPressHandler() {
-        console.log(form);
         for (const key in form) {
             // @ts-ignore
             if (key !== "image" && !form[key]) return Alert.alert("Por favor completa todos los campos");
@@ -55,7 +55,28 @@ export default function AddProductos({ navigation }: RootTabScreenProps<"TabFive
             });
             if (data.status === 200) {
                 dispatch(getProducts());
-                navigation.navigate("TabFive");
+                props.navigation.navigate("TabFive");
+            } else {
+                Alert.alert("Algo salio mal con el servidor. Por favor trate de nuevo mas tarde o contactenos");
+            }
+        } catch (error) {
+            console.error(error);
+            Alert.alert("Algo salio mal con el servidor. Por favor trate de nuevo mas tarde o contactenos");
+        }
+    }
+
+    async function updateHandler() {
+        for (const key in form) {
+            // @ts-ignore
+            if (key !== "image" && !form[key]) return Alert.alert("Por favor completa todos los campos");
+        }
+        try {
+            const data = await axios.put("http://192.168.0.230:3001/product", {
+                ...form,
+            });
+            if (data.status === 200) {
+                dispatch(getProducts());
+                props.navigation.navigate("TabFive");
             } else {
                 Alert.alert("Algo salio mal con el servidor. Por favor trate de nuevo mas tarde o contactenos");
             }
@@ -154,9 +175,15 @@ export default function AddProductos({ navigation }: RootTabScreenProps<"TabFive
                     />
                 </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <Button onPress={onPressHandler} title="Cargar producto" color="#841584" />
-            </View>
+            {props.route.params?.update ? (
+                <View style={styles.buttonContainer}>
+                    <Button onPress={updateHandler} title="Editar producto" color="#841584" />
+                </View>
+            ) : (
+                <View style={styles.buttonContainer}>
+                    <Button onPress={onPressHandler} title="Cargar producto" color="#841584" />
+                </View>
+            )}
         </View>
     );
 }

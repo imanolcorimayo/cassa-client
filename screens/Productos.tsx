@@ -156,6 +156,12 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
                             name={el.name}
                             stock={el.quantity}
                             sellUnit={el.sell_unit}
+                            buyUnit={el.buy_unit}
+                            sellPrice={el.sell_price}
+                            buyPrice={el.buy_price}
+                            quantity={el.quantity}
+                            type={el.type}
+                            navigation={navigation}
                         ></Producto>
                     );
                 })}
