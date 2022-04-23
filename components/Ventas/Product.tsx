@@ -44,8 +44,13 @@ export default function Product(props: Props) {
                     </Text>
                 </View>
                 <View style={styles.buttons}>
-                    <View style={styles.button}>
-                        <TextInput placeholder="Somee" keyboardType="numeric" value={quantity} />
+                    <View style={styles.input}>
+                        <TextInput
+                            placeholder="0"
+                            keyboardType="numeric"
+                            value={quantity}
+                            onChangeText={(quantity) => setQuantity(quantity)}
+                        />
                     </View>
                     <Text>{props.sellUnit}</Text>
                 </View>
@@ -67,9 +72,20 @@ const styles = StyleSheet.create({
     buttons: {
         width: 100,
         backgroundColor: "transparent",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingRight: 5,
     },
-    button: {
+    input: {
         margin: 5,
+        width: "100%",
+        backgroundColor: "#aaa",
+        height: 40,
+        borderRadius: 5,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
     containerBottom: {
         display: "flex",
