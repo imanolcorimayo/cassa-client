@@ -1,6 +1,8 @@
+import React from "react";
+
 import { View, Text } from "../Themed";
 
-import { StyleSheet, Button, Alert, Image } from "react-native";
+import { StyleSheet, Button, Alert, Image, TextInput } from "react-native";
 
 // Redux
 import { showProductModal } from "../../redux/actions";
@@ -17,10 +19,10 @@ interface Props {
     type: String;
     key: Number;
     quantity: Number;
-    navigation: any;
 }
 
-export default function Producto(props: Props) {
+export default function Product(props: Props) {
+    const [quantity, setQuantity] = React.useState("");
     const dispatch = useDispatch();
 
     return (
@@ -43,28 +45,9 @@ export default function Producto(props: Props) {
                 </View>
                 <View style={styles.buttons}>
                     <View style={styles.button}>
-                        <Button title="Detalles" onPress={() => dispatch(showProductModal(props.id))} />
+                        <TextInput placeholder="Somee" keyboardType="numeric" value={quantity} />
                     </View>
-                    <View style={styles.button}>
-                        <Button
-                            title="Editar"
-                            onPress={() =>
-                                props.navigation.navigate("AddProduct", {
-                                    update: true,
-                                    product: {
-                                        id: props.id,
-                                        name: props.name,
-                                        sellUnit: props.sellUnit,
-                                        buyUnit: props.buyUnit,
-                                        buyPrice: props.buyPrice,
-                                        sellPrice: props.sellPrice,
-                                        type: props.type,
-                                        quantity: props.quantity,
-                                    },
-                                })
-                            }
-                        />
-                    </View>
+                    <Text>{props.sellUnit}</Text>
                 </View>
             </View>
         </View>

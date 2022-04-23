@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
         padding: 5,
         marginBottom: 180,
     },
+    // Add button
     addButton: {
         position: "absolute",
         bottom: 120,

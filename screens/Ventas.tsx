@@ -1,70 +1,100 @@
-import { StyleSheet } from 'react-native';
-import React from 'react';
+import { StyleSheet } from "react-native";
+import React from "react";
 
-import { RootTabScreenProps } from '../types';
+import { RootTabScreenProps } from "../types";
 
 // Components
-import { View, Text, } from '../components/Themed';
-import { TextInput, ScrollView } from 'react-native';
-import CommerceAvatar from '../components/CommerceAvatar';
-import Venta from '../components/Ventas/Venta';
-import Ordenar from '../components/Generales/Ordenar';
-import Add from '../components/Ventas/Add';
+import { View, Text } from "../components/Themed";
+import { ScrollView, Pressable, Dimensions } from "react-native";
+import CommerceAvatar from "../components/CommerceAvatar";
+import Venta from "../components/Ventas/Venta";
+import Ordenar from "../components/Generales/Ordenar";
 
-export default function Ventas({ navigation }: RootTabScreenProps<'TabThree'>) {
-    const [number, onChangeNumber] = React.useState("something");
-    const arr = [
-        1,2,3,4,5,6,7,8,9,10,11,12,13,14
-    ]
-  return (
-    <View style={styles.container}>
-        <Add></Add>
-        <CommerceAvatar/>
-        <View style={styles.containerInput}>
-            <Text>Escribe palabras clave...</Text>
-            <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="useless placeholder"
-            />
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { getSales } from "../redux/actions";
+
+interface globalState {
+    sales: Array<Object>;
+    products: Array<Object>;
+}
+
+export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
+    const dispatch = useDispatch();
+    const sales = useSelector((state: globalState) => state.sales);
+
+    React.useEffect(() => {
+        dispatch(getSales());
+    }, []);
+    function handlePress() {
+        console.log("somee");
+    }
+    return (
+        <View style={styles.container}>
+            <CommerceAvatar />
+            <Ordenar></Ordenar>
+            <ScrollView style={styles.containerScroll}>
+                {sales.map((el, index) => {
+                    return <Venta key={index}></Venta>;
+                })}
+                <Text></Text>
+            </ScrollView>
+            <View style={styles.addButton}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("AddSale")}>
+                    <Text>Añadir venta</Text>
+                </Pressable>
+            </View>
         </View>
-        <Ordenar></Ordenar>
-        <ScrollView style={styles.containerScroll}>
-            {
-                arr.map((el) => {
-                    return (
-                        <Venta key={el}></Venta>
-                    )
-                })
-            }
-            <Text></Text>
-        </ScrollView>
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+    },
+    // Button add
+    containerButton: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 80,
+        height: 80,
+        backgroundColor: "#be0",
+        margin: 5,
+        position: "absolute",
+        zIndex: 105,
+        top: 580,
+        right: 15,
+        borderRadius: 40,
+    },
+    text: {
+        color: "#000",
+        fontSize: 15,
+    },
 
-    },
-    input: {
-      height: 40,
-      width: 350,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      backgroundColor: 'white',
-      borderRadius: 15
-    },
-    containerInput: {
-        padding: 10,
-        display: 'flex',
-        alignItems: 'center',
-    },
+    // Scroll container
     containerScroll: {
-        display: 'flex',
+        display: "flex",
         padding: 5,
-        marginBottom: 220,
-    }
+        marginBottom: 180,
+    },
+
+    // Add button
+    addButton: {
+        position: "absolute",
+        bottom: 120,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+    },
+    button: {
+        width: Dimensions.get("window").width * 0.7,
+        backgroundColor: "#51f",
+        height: 40,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 15,
+    },
 });

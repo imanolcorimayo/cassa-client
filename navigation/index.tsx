@@ -27,6 +27,8 @@ import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { View } from "../components/Themed";
 import Auth from "../screens/Auth";
+import AddSale from "../screens/sales/AddSale";
+import SelectProduct from "../screens/sales/SelectProduct";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -48,6 +50,7 @@ function RootNavigator() {
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
 
+            {/* PRODUCTS SCREENS */}
             <Stack.Screen
                 name="AddProduct"
                 component={AddProduct}
@@ -55,6 +58,22 @@ function RootNavigator() {
                     title: "Producto",
                 }}
             />
+            {/* SALES SCREENS */}
+            <Stack.Screen
+                name="AddSale"
+                component={AddSale}
+                options={{
+                    title: "Nueva venta",
+                }}
+            />
+            <Stack.Screen
+                name="SelectProduct"
+                component={SelectProduct}
+                options={{
+                    title: "Selecciona los productos",
+                }}
+            />
+            {/* OTHER SCREENS */}
             <Stack.Screen
                 name="Auth"
                 component={Auth}

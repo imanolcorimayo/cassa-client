@@ -1,12 +1,9 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 
-// Types typescript
-import { RootTabScreenProps } from "../../types";
-
 // Components
 import { View, Text } from "../../components/Themed";
-import { ScrollView, Button, Alert, TextInput } from "react-native";
+import { Button, Alert, TextInput } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import NumericInput from "react-native-numeric-input";
 
@@ -24,6 +21,7 @@ interface Props {
 
 export default function AddProductos(props: Props) {
     // TODO get information of category and units from database and button with add category/units
+    // TODO This component should not have the name "AddProduct" because we add, delete and update products here
 
     const dispatch = useDispatch();
 
