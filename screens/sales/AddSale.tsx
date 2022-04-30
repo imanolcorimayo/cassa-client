@@ -8,11 +8,24 @@ import { View, Text } from "../../components/Themed";
 import axios from "axios";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions";
 
 export default function AddSale({ navigation }: any) {
     const [modalProduct, setModalProduct] = React.useState(false);
+    const [total, setTotal] = React.useState(0);
+    const { products, selectProducts } = useSelector((state: any) => state);
+    React.useEffect(() => {
+        for (let i = 0; i < products.length; i++) {
+            // To don't assume that they have the same order
+            for (let j = 0; j < selectProducts.length; j++) {
+                if (products[i].id === selectProducts[j]?.id && products[i].quantity !== selectProducts[j]?.quantity) {
+                    const difference = products[i].quantity - selectProducts[j].quantity;
+                    setTotal(total + products[i].sellPrice * difference);
+                }
+            }
+        }
+    }, [selectProducts]);
     return (
         <View style={styles.container}>
             {/* MODAL */}

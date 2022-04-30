@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { GET_PRODUCTS, GET_SALES, RESTORE_STATE, SHOW_PRODUCT_MODAL } from "../constants.js";
+import {
+    GET_PRODUCTS,
+    GET_SALES,
+    RESTORE_STATE,
+    SHOW_PRODUCT_MODAL,
+    REORDER_PRODUCTS,
+    NEW_STOCK_PRODUCTS,
+} from "../constants.js";
 
 // PRODUCTS
 
@@ -31,6 +38,20 @@ export function getSales() {
         } catch (error) {
             console.log(error);
         }
+    };
+}
+
+export function reorderProducts(id) {
+    return {
+        type: REORDER_PRODUCTS,
+        payload: id,
+    };
+}
+
+export function newStockProducts(id, quantity) {
+    return {
+        type: NEW_STOCK_PRODUCTS,
+        payload: { id, quantity },
     };
 }
 

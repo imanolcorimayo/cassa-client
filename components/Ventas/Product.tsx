@@ -5,7 +5,7 @@ import { View, Text } from "../Themed";
 import { StyleSheet, Button, Alert, Image, TextInput } from "react-native";
 
 // Redux
-import { showProductModal } from "../../redux/actions";
+import { newStockProducts, reorderProducts } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 interface Props {
@@ -25,9 +25,31 @@ export default function Product(props: Props) {
     const [quantity, setQuantity] = React.useState("");
     const dispatch = useDispatch();
 
+    React.useEffect(() => {
+        if (quantity.length) {
+            // TODO This below's dispatch isn't working as spect, fix it
+            //dispatch(reorderProducts(props.id));
+        }
+        dispatch(newStockProducts(props.id, quantity.length ? quantity : 0));
+    }, [quantity]);
+
     return (
-        <View style={styles.container}>
-            <View style={styles.containerBottom}>
+        <View
+            style={[
+                styles.container,
+                quantity ? (props.stock < 0 ? styles.wrong : styles.selected) : styles.notSelected,
+            ]}
+        >
+            <View
+                style={[
+                    styles.containerBottom,
+                    quantity
+                        ? props.stock < 0
+                            ? styles.bottomWrong
+                            : styles.bottomSelected
+                        : styles.bottomNotSelected,
+                ]}
+            >
                 {/* Logo */}
                 <View>
                     <Image
@@ -44,15 +66,18 @@ export default function Product(props: Props) {
                     </Text>
                 </View>
                 <View style={styles.buttons}>
-                    <View style={styles.input}>
+                    <View style={styles.inputContainer}>
                         <TextInput
                             placeholder="0"
+                            style={styles.input}
                             keyboardType="numeric"
                             value={quantity}
                             onChangeText={(quantity) => setQuantity(quantity)}
                         />
+                        <Text style={{ width: "30%", textAlign: "center" }}>
+                            {props.sellUnit === "unitario" ? "un." : props.sellUnit}
+                        </Text>
                     </View>
-                    <Text>{props.sellUnit}</Text>
                 </View>
             </View>
         </View>
@@ -66,8 +91,16 @@ const styles = StyleSheet.create({
         width: 390,
         height: 100,
         margin: 5,
-        backgroundColor: "#555",
         borderRadius: 5,
+    },
+    selected: {
+        backgroundColor: "#00ff00",
+    },
+    wrong: {
+        backgroundColor: "#ff0000",
+    },
+    notSelected: {
+        backgroundColor: "#555",
     },
     buttons: {
         width: 100,
@@ -77,15 +110,23 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingRight: 5,
     },
-    input: {
+    inputContainer: {
         margin: 5,
         width: "100%",
         backgroundColor: "#aaa",
         height: 40,
         borderRadius: 5,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
         alignItems: "center",
+        overflow: "hidden",
+    },
+    input: {
+        backgroundColor: "#ddd",
+        height: "100%",
+        width: "70%",
+        paddingLeft: 5,
     },
     containerBottom: {
         display: "flex",
@@ -95,6 +136,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#555",
     },
+    bottomSelected: {
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#00ff00",
+    },
+    bottomWrong: {
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#ff0000",
+    },
+    bottomNotSelected: {},
     logo: {
         width: 120,
         height: "100%",
