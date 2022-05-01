@@ -19,18 +19,19 @@ interface Props {
     type: String;
     key: Number;
     quantity: Number;
+    sellQuantity: Number;
 }
 
 export default function Product(props: Props) {
-    const [quantity, setQuantity] = React.useState("");
+    const [quantity, setQuantity] = React.useState(props.sellQuantity ? props.sellQuantity : "");
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (quantity.length) {
+        if (quantity) {
             // TODO This below's dispatch isn't working as spect, fix it
             //dispatch(reorderProducts(props.id));
         }
-        dispatch(newStockProducts(props.id, quantity.length ? quantity : 0));
+        dispatch(newStockProducts(props.id, quantity ? quantity : 0));
     }, [quantity]);
 
     return (
@@ -71,7 +72,7 @@ export default function Product(props: Props) {
                             placeholder="0"
                             style={styles.input}
                             keyboardType="numeric"
-                            value={quantity}
+                            value={quantity.toString()}
                             onChangeText={(quantity) => setQuantity(quantity)}
                         />
                         <Text style={{ width: "30%", textAlign: "center" }}>

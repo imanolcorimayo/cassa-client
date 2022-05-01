@@ -33,14 +33,13 @@ export default function SelectProduct() {
     React.useEffect(() => {
         if (!products.length) dispatch(getProducts());
     }, []);
-    React.useEffect(() => {
-        console.log("New SELL: ", newSell);
-    }, [newSell]);
 
     return (
         <View style={styles.container}>
             <ScrollView style={styles.containerScroll}>
                 {products.map((el: Product, index: any) => {
+                    const quantity = newSell.products.find((element: Product) => element.id === el.id);
+                    const sellQuantity = quantity ? quantity.quantity : "";
                     return (
                         <Product
                             key={index}
@@ -52,6 +51,7 @@ export default function SelectProduct() {
                             sellPrice={el.sell_price}
                             buyPrice={el.buy_price}
                             quantity={el.quantity}
+                            sellQuantity={sellQuantity}
                             type={el.type}
                         ></Product>
                     );

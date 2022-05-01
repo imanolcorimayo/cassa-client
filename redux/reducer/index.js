@@ -1,4 +1,11 @@
-import { GET_PRODUCTS, RESTORE_STATE, SHOW_PRODUCT_MODAL, REORDER_PRODUCTS, NEW_STOCK_PRODUCTS } from "../constants.js";
+import {
+    GET_PRODUCTS,
+    RESTORE_STATE,
+    SHOW_PRODUCT_MODAL,
+    REORDER_PRODUCTS,
+    NEW_STOCK_PRODUCTS,
+    GET_SALES,
+} from "../constants.js";
 
 const initialState = {
     products: [],
@@ -10,11 +17,6 @@ const initialState = {
     sales: [],
     newSell: {
         products: [],
-        client: "",
-        date: "",
-        status: "",
-        details: "",
-        paidWay: "",
     },
 };
 
@@ -23,7 +25,7 @@ function rootReducer(state = initialState, action) {
         return {
             ...state,
             products: action.payload,
-            selectProducts: [...action.payload],
+            selectProducts: action.payload,
         };
     } else if (action.type === SHOW_PRODUCT_MODAL) {
         return {
@@ -57,6 +59,11 @@ function rootReducer(state = initialState, action) {
             ...state,
             selectProducts: products,
             newSell: { ...state.newSell, products: [...state.newSell.products, ...newProduct] },
+        };
+    } else if (action.type === GET_SALES) {
+        return {
+            ...state,
+            sales: action.payload,
         };
     } else if (action.type === RESTORE_STATE) {
         return initialState;

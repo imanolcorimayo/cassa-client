@@ -41,7 +41,6 @@ export default function AddProductos(props: Props) {
     }, []);
 
     async function onPressHandler() {
-        console.log("FORRRRM: ", form);
         for (const key in form) {
             // @ts-ignore
             if (key !== "image" && !form[key]) return Alert.alert("Por favor completa todos los campos");

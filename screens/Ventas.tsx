@@ -19,6 +19,17 @@ interface globalState {
     products: Array<Object>;
 }
 
+interface Sale {
+    id: number;
+    products: string;
+    client: string;
+    total: number;
+    status: string;
+    details: string;
+    paidWay: string;
+    createdAt: string;
+}
+
 export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
     const dispatch = useDispatch();
     const sales = useSelector((state: globalState) => state.sales);
@@ -26,16 +37,25 @@ export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
     React.useEffect(() => {
         dispatch(getSales());
     }, []);
-    function handlePress() {
-        console.log("somee");
-    }
     return (
         <View style={styles.container}>
             <CommerceAvatar />
             <Ordenar></Ordenar>
             <ScrollView style={styles.containerScroll}>
-                {sales.map((el, index) => {
-                    return <Venta key={index}></Venta>;
+                {sales.map((el: any, index: any) => {
+                    return (
+                        <Venta
+                            key={index}
+                            products={JSON.parse(el.products)}
+                            id={el.id}
+                            client={el.client}
+                            total={el.total}
+                            status={el.status}
+                            details={el.details}
+                            paidWay={el.paidWay}
+                            createdAt={el.createdAt}
+                        />
+                    );
                 })}
                 <Text></Text>
             </ScrollView>
