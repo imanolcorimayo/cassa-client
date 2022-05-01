@@ -4,22 +4,19 @@ import { View, Text } from "../Themed";
 
 import { StyleSheet, Modal, Dimensions, Pressable, Alert } from "react-native";
 
-interface Props {
-    id: Number;
-    name: String;
-    stock: Number;
-    sellUnit: String;
-    buyUnit: String;
-    buyPrice: String;
-    sellPrice: String;
-    type: String;
-    key: Number;
-    quantity: Number;
-    sellQuantity: Number;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { showDetailsSalesModal } from "../../redux/actions";
 
-export default function SellDetails(props: Props) {
-    const [modalProduct, setModalProduct] = React.useState(false);
+export default function SellDetails() {
+    const modal = useSelector((state: any) => state.detailsSalesModal);
+    const dispatch = useDispatch();
+
+    const [modalProduct, setModalProduct] = React.useState(modal.show);
+
+    React.useEffect(() => {
+        setModalProduct(modal.show);
+    }, [modal]);
+
     return (
         <View>
             {/* MODAL TO PRODUCTS */}
@@ -34,25 +31,36 @@ export default function SellDetails(props: Props) {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text>¿Prefiere seleccionar productos o cargar manualmente?</Text>
+                        <View style={styles.listContainer}>
+                            <Text style={styles.list}>Nombre</Text>
+                            <Text style={styles.list}>Peso/Cantidad</Text>
+                            <Text style={styles.list}>Precio un.</Text>
+                            <Text style={styles.list}>SubTotal</Text>
+                        </View>
+                        {modal.products?.map((el: any, index: any) => {
+                            return (
+                                <View key={index + "products"} style={styles.listContainer}>
+                                    <Text style={styles.list}>{el.name}</Text>
+                                    <Text style={styles.list}>
+                                        {el.quantity + " " + (el.sell_unit === "unitario" ? "un." : el.sell_unit)}
+                                    </Text>
+                                    <Text style={styles.list}>{el.sell_price}</Text>
+                                    <Text style={styles.list}>{el.sell_price * el.quantity}</Text>
+                                </View>
+                            );
+                        })}
                         <View style={styles.flexButtons}>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => {
-                                    setModalProduct(false);
+                                    dispatch(showDetailsSalesModal({ show: false, products: [] }));
                                 }}
                             >
-                                <Text>Seleccionar</Text>
-                            </Pressable>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalProduct(false)}
-                            >
-                                <Text>Manual</Text>
+                                <Text>Imprimir</Text>
                             </Pressable>
                             <Pressable
                                 style={[styles.button, styles.buttonOpen]}
-                                onPress={() => setModalProduct(false)}
+                                onPress={() => dispatch(showDetailsSalesModal({ show: false, products: [] }))}
                             >
                                 <Text style={styles.textStyle}>Volver</Text>
                             </Pressable>
@@ -82,6 +90,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     modalView: {
+        width: Dimensions.get("window").width * 0.95,
         margin: 10,
         backgroundColor: "#000",
         borderRadius: 20,
@@ -117,5 +126,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 15,
+    },
+    // Row of list
+    listContainer: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+    },
+    list: {
+        fontSize: 11,
+        width: "25%",
+        paddingLeft: 4,
     },
 });

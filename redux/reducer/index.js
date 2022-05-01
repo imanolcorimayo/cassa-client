@@ -5,6 +5,7 @@ import {
     REORDER_PRODUCTS,
     NEW_STOCK_PRODUCTS,
     GET_SALES,
+    SHOW_DETAILS_SALES_MODAL,
 } from "../constants.js";
 
 const initialState = {
@@ -16,6 +17,10 @@ const initialState = {
     },
     sales: [],
     newSell: {
+        products: [],
+    },
+    detailsSalesModal: {
+        show: false,
         products: [],
     },
 };
@@ -64,6 +69,11 @@ function rootReducer(state = initialState, action) {
         return {
             ...state,
             sales: action.payload,
+        };
+    } else if (action.type === SHOW_DETAILS_SALES_MODAL) {
+        return {
+            ...state,
+            detailsSalesModal: action.payload,
         };
     } else if (action.type === RESTORE_STATE) {
         return initialState;

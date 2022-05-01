@@ -3,6 +3,10 @@ import { View, Text } from "../Themed";
 
 import { StyleSheet, Button, Alert } from "react-native";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { showDetailsSalesModal } from "../../redux/actions";
+
 interface Props {
     id: Number;
     products: Array<any>;
@@ -14,6 +18,7 @@ interface Props {
     createdAt: string;
 }
 export default function Venta(props: Props) {
+    const dispatch = useDispatch();
     const [date, setDate] = React.useState("");
     React.useEffect(() => {
         const date = new Date(props.createdAt.split("/")[0]);
@@ -28,7 +33,10 @@ export default function Venta(props: Props) {
                 <Text>{props.client}</Text>
                 <Text>Total: $ {props.total}</Text>
                 <View style={styles.button}>
-                    <Button title="Detalles" onPress={() => Alert.alert("Button with adjusted color pressed")} />
+                    <Button
+                        title="Detalles"
+                        onPress={() => dispatch(showDetailsSalesModal({ show: true, products: props.products }))}
+                    />
                 </View>
             </View>
         </View>

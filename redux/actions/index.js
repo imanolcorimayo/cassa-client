@@ -7,6 +7,7 @@ import {
     SHOW_PRODUCT_MODAL,
     REORDER_PRODUCTS,
     NEW_STOCK_PRODUCTS,
+    SHOW_DETAILS_SALES_MODAL,
 } from "../constants.js";
 
 // PRODUCTS
@@ -45,6 +46,13 @@ export function reorderProducts(id) {
     return {
         type: REORDER_PRODUCTS,
         payload: id,
+    };
+}
+
+export function showDetailsSalesModal(bool) {
+    return {
+        type: SHOW_DETAILS_SALES_MODAL,
+        payload: bool,
     };
 }
 

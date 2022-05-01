@@ -9,6 +9,7 @@ import { ScrollView, Pressable, Dimensions } from "react-native";
 import CommerceAvatar from "../components/CommerceAvatar";
 import Venta from "../components/Ventas/Venta";
 import Ordenar from "../components/Generales/Ordenar";
+import SellDetails from "../components/Ventas/SellDetails";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +40,7 @@ export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
     }, []);
     return (
         <View style={styles.container}>
+            <SellDetails></SellDetails>
             <CommerceAvatar />
             <Ordenar></Ordenar>
             <ScrollView style={styles.containerScroll}>
