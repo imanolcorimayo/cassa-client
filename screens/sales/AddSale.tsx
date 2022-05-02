@@ -12,7 +12,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getSales } from "../../redux/actions";
 
-export default function AddSale({ navigation }: any) {
+export default function AddSale({ navigation, route }: any) {
     const dispatch = useDispatch();
     const [modalProduct, setModalProduct] = React.useState(false);
     const [modalClient, setModalClient] = React.useState(false);
@@ -36,6 +36,7 @@ export default function AddSale({ navigation }: any) {
         setTotal(total);
     }, [newSell]);
     React.useEffect(() => {
+        console.log("PARAMS", route.params.type);
         var today = new Date();
         const aux = today.toLocaleDateString("es-AR").split("/");
         setForm({ ...form, date: [aux[1], aux[0], aux[2]].join("/") });

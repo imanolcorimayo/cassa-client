@@ -18,7 +18,7 @@ export type RootStackParamList = {
     Modal: undefined;
     NotFound: undefined;
     AddProduct: { update: Boolean; product: Object } | undefined;
-    AddSale: undefined;
+    AddSale: { type: string } | undefined;
     SelectProduct: undefined;
     Auth: undefined;
 };

@@ -36,7 +36,9 @@ export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
     const sales = useSelector((state: globalState) => state.sales);
 
     React.useEffect(() => {
-        dispatch(getSales());
+        if (!sales.length) {
+            dispatch(getSales());
+        }
     }, []);
     return (
         <View style={styles.container}>
@@ -62,7 +64,7 @@ export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
                 <Text></Text>
             </ScrollView>
             <View style={styles.addButton}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate("AddSale")}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("AddSale", { type: "paid out" })}>
                     <Text>Añadir venta</Text>
                 </Pressable>
             </View>
