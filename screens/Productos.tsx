@@ -5,7 +5,6 @@ import { RootTabScreenProps } from "../types";
 // Components
 import { ScrollView, Button, Alert, Dimensions, Pressable, StyleSheet, Modal } from "react-native";
 import { View, Text } from "../components/Themed";
-import CommerceAvatar from "../components/CommerceAvatar";
 import Producto from "../components/Productos/Producto";
 import Ordenar from "../components/Generales/Ordenar";
 
@@ -126,7 +125,6 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
           <Text>Añadir producto</Text>
         </Pressable>
       </View>
-      <CommerceAvatar />
       <View style={styles.topButtonsContainer}>
         <View style={styles.topButtons}>
           <Button

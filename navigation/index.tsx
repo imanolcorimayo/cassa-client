@@ -109,7 +109,7 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
           width: 70,
           height: 70,
           borderRadius: 35,
-          backgroundColor: "rgba(198, 247, 195, 1)",
+          backgroundColor: "rgba(127, 182, 133, 1)",
           shadowColor: "#fff",
           shadowOffset: { width: 5, height: 10 },
           shadowOpacity: 1,
@@ -195,7 +195,7 @@ function BottomTabNavigator() {
         component={Ventas}
         options={{
           //@ts-ignore
-          tabBarIcon: ({ color }) => <TabBarIcon style={{ fontSize: 30 }} name="plus" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon style={{ fontSize: 30 }} name="plus" color={"rgba(66, 106, 90, 1)"} />,
           tabBarButton: (props) => <CustomTabBarButton {...props}></CustomTabBarButton>,
           // tabBarShowLabel: false, //does not working
           tabBarLabel: "",
