@@ -6,6 +6,7 @@ import {
     NEW_STOCK_PRODUCTS,
     GET_SALES,
     SHOW_DETAILS_SALES_MODAL,
+    GET_TRUSTED,
 } from "../constants.js";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
         show: false,
         products: [],
     },
+    trusted: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -74,6 +76,11 @@ function rootReducer(state = initialState, action) {
         return {
             ...state,
             detailsSalesModal: action.payload,
+        };
+    } else if (action.type === GET_TRUSTED) {
+        return {
+            ...state,
+            trusted: action.payload,
         };
     } else if (action.type === RESTORE_STATE) {
         return initialState;

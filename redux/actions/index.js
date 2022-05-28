@@ -8,6 +8,7 @@ import {
     REORDER_PRODUCTS,
     NEW_STOCK_PRODUCTS,
     SHOW_DETAILS_SALES_MODAL,
+    GET_TRUSTED,
 } from "../constants.js";
 
 // PRODUCTS
@@ -60,6 +61,22 @@ export function newStockProducts(id, quantity) {
     return {
         type: NEW_STOCK_PRODUCTS,
         payload: { id, quantity },
+    };
+}
+
+// TRUSTED
+
+export function getTrusted() {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get("http://192.168.0.230:3001/sales/trusted");
+            dispatch({
+                type: GET_TRUSTED,
+                payload: data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 }
 

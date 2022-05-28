@@ -20,7 +20,7 @@ export default function AddSale({ navigation, route }: any) {
     const [form, setForm] = React.useState({
         client: "",
         date: "",
-        status: "paid out",
+        status: route.params.type,
         details: "",
         paidWay: "MP",
     });
@@ -50,9 +50,11 @@ export default function AddSale({ navigation, route }: any) {
                 products: newSell.products,
                 total,
             });
-            if (data.status === 200) {
+            if (data.status === 400) {
+                Alert.alert("faltan datos");
+            } else if (data.status === 200) {
                 Alert.alert(data.data);
-                dispatch(getSales);
+                dispatch(getSales());
             }
         } catch (error) {
             console.error(error);
@@ -207,17 +209,21 @@ export default function AddSale({ navigation, route }: any) {
                 <Text>Detalles</Text>
             </Pressable>
             {form.details ? <Text style={styles.textDetails}>{form.details}</Text> : <></>}
-            <View style={styles.pickerContainer}>
-                <Picker
-                    selectedValue={form.paidWay}
-                    onValueChange={(itemValue) => setForm({ ...form, paidWay: itemValue })}
-                    mode={"dropdown"}
-                >
-                    <Picker.Item label="Mercado Pago" value="MP" style={styles.pickerText} />
-                    <Picker.Item label="Efectivo" value="cash" style={styles.pickerText} />
-                    <Picker.Item label="Otro" value="other" style={styles.pickerText} />
-                </Picker>
-            </View>
+            {form.status === "paid out" ? (
+                <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={form.paidWay}
+                        onValueChange={(itemValue) => setForm({ ...form, paidWay: itemValue })}
+                        mode={"dropdown"}
+                    >
+                        <Picker.Item label="Mercado Pago" value="MP" style={styles.pickerText} />
+                        <Picker.Item label="Efectivo" value="cash" style={styles.pickerText} />
+                        <Picker.Item label="Otro" value="other" style={styles.pickerText} />
+                    </Picker>
+                </View>
+            ) : (
+                <></>
+            )}
 
             <View style={styles.sellButtonContainer}>
                 <Pressable style={styles.sellButton} onPress={handleSell}>
