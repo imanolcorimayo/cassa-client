@@ -120,23 +120,23 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
 
       {/* END MODAL */}
 
-      <View style={styles.addButton}>
+      {/* <View style={styles.addButton}>
         <Pressable style={styles.button} onPress={() => navigation.navigate("AddProduct")}>
           <Text>Añadir producto</Text>
         </Pressable>
-      </View>
+      </View> */}
       <View style={styles.topButtonsContainer}>
         <View style={styles.topButtons}>
           <Button
             title="Productos/Stock"
-            color={"#51f"}
+            color={"rgba(66, 106, 90, 1)"}
             onPress={() => Alert.alert("Button with adjusted color pressed")}
           />
         </View>
         <View style={styles.topButtons}>
           <Button
-            title="Historial de compra"
-            color={"#51f"}
+            title="Historial"
+            color={"rgba(66, 106, 90, 1)"}
             onPress={() => Alert.alert("Button with adjusted color pressed")}
           />
         </View>
@@ -238,11 +238,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "rgba(66, 106, 90, 1)",
   },
   textStyle: {
     color: "white",
@@ -255,6 +252,7 @@ const styles = StyleSheet.create({
   },
   // MODAL
   container: {
+    backgroundColor: "#111",
     height: Dimensions.get("window").height,
     padding: 10,
   },
@@ -262,9 +260,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    backgroundColor: "#111",
   },
   topButtons: {
     margin: 5,
+    flex: 1,
   },
   input: {
     height: 40,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     display: "flex",
-    marginBottom: 180,
+    marginBottom: 150,
   },
   // Add button
   addButton: {
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: Dimensions.get("window").width * 0.7,
-    backgroundColor: "#51f",
+    backgroundColor: "rgba(66, 106, 90, 1)",
     height: 40,
     display: "flex",
     alignItems: "center",

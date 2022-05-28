@@ -106,8 +106,8 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
     >
       <View
         style={{
-          width: 70,
-          height: 70,
+          width: 65,
+          height: 65,
           borderRadius: 35,
           backgroundColor: "rgba(127, 182, 133, 1)",
           shadowColor: "#fff",
@@ -132,15 +132,19 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerRight: (props) => (
-          <View>
-            <Link style={[styles.auth, { backgroundColor: "#111" }]} to={{ screen: "Auth" }}>
-              Iniciar Sesion
+          <View style={{ backgroundColor: "#333" }}>
+            <Link style={[styles.auth, { backgroundColor: "#333", marginRight: 15 }]} to={{ screen: "Auth" }}>
+              {/* @ts-ignore */}
+              <TabBarIcon style={{ fontSize: 30 }} name="sign-in" color={"#ccc"} />
             </Link>
           </View>
         ),
+        headerStyle: {
+          backgroundColor: "#333",
+        },
         tabBarStyle: {
           position: "absolute",
-          bottom: 0,
+          bottom: 10,
           left: 20,
           right: 20,
           elevation: 0,

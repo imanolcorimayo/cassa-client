@@ -57,7 +57,7 @@ export default function Producto(props: Props) {
           <Text style={styles.text}>19 Julio de 2022</Text>
           <View
             style={{
-              backgroundColor: "rgba(72, 235, 56, 0.7)",
+              backgroundColor: "rgba(127, 182, 133, 1)",
               height: "100%",
               flex: 0.4,
               display: "flex",
@@ -67,9 +67,7 @@ export default function Producto(props: Props) {
             }}
           >
             {/* status */}
-            <Text style={[styles.text, { color: "rgba(198, 247, 195, 1)", fontWeight: "bold", letterSpacing: 1 }]}>
-              Full
-            </Text>
+            <Text style={[styles.text, { color: "white", fontWeight: "bold", letterSpacing: 1 }]}>Full</Text>
           </View>
         </View>
         <View style={styles.containerTwo_second}>
