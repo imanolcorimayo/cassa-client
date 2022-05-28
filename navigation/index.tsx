@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, StyleSheet } from "react-native";
+import { ColorSchemeName, StyleSheet, TouchableOpacity } from "react-native";
 
 // React Navigation
 import { Link } from "@react-navigation/native";
@@ -31,11 +31,11 @@ import AddSale from "../screens/sales/AddSale";
 import SelectProduct from "../screens/sales/SelectProduct";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-    return (
-        <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <RootNavigator />
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }
 
 /**
@@ -45,47 +45,47 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
 
-            {/* PRODUCTS SCREENS */}
-            <Stack.Screen
-                name="AddProduct"
-                component={AddProduct}
-                options={{
-                    title: "Producto",
-                }}
-            />
-            {/* SALES SCREENS */}
-            <Stack.Screen
-                name="AddSale"
-                component={AddSale}
-                options={{
-                    title: "Nueva venta",
-                }}
-            />
-            <Stack.Screen
-                name="SelectProduct"
-                component={SelectProduct}
-                options={{
-                    title: "Selecciona los productos",
-                }}
-            />
-            {/* OTHER SCREENS */}
-            <Stack.Screen
-                name="Auth"
-                component={Auth}
-                options={{
-                    title: "inicia sesion o registrate",
-                }}
-            />
-            <Stack.Group screenOptions={{ presentation: "modal" }}>
-                <Stack.Screen name="Modal" component={ModalScreen} />
-            </Stack.Group>
-        </Stack.Navigator>
-    );
+      {/* PRODUCTS SCREENS */}
+      <Stack.Screen
+        name="AddProduct"
+        component={AddProduct}
+        options={{
+          title: "Producto",
+        }}
+      />
+      {/* SALES SCREENS */}
+      <Stack.Screen
+        name="AddSale"
+        component={AddSale}
+        options={{
+          title: "Nueva venta",
+        }}
+      />
+      <Stack.Screen
+        name="SelectProduct"
+        component={SelectProduct}
+        options={{
+          title: "Selecciona los productos",
+        }}
+      />
+      {/* OTHER SCREENS */}
+      <Stack.Screen
+        name="Auth"
+        component={Auth}
+        options={{
+          title: "inicia sesion o registrate",
+        }}
+      />
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen name="Modal" component={ModalScreen} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
 }
 
 /**
@@ -94,25 +94,65 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
-    const colorScheme = useColorScheme();
+const CustomTabBarButton = ({ children, onPress }: any) => {
+  return (
+    <TouchableOpacity
+      style={{
+        top: -30,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      onPress={onPress}
+    >
+      <View
+        style={{
+          width: 70,
+          height: 70,
+          borderRadius: 35,
+          backgroundColor: "rgba(198, 247, 195, 1)",
+          shadowColor: "#fff",
+          shadowOffset: { width: 5, height: 10 },
+          shadowOpacity: 1,
+          shadowRadius: 5,
+          elevation: 3,
+        }}
+      >
+        {children}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-    return (
-        <BottomTab.Navigator
-            initialRouteName="TabThree"
-            screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme].tint,
-                headerRight: (props) => (
-                    <View>
-                        <Link style={styles.auth} to={{ screen: "Auth" }}>
-                            Iniciar Sesion
-                        </Link>
-                    </View>
-                ),
-            }}
-        >
-            {/* Buttons */}
-            {/* <BottomTab.Screen
+function BottomTabNavigator() {
+  const colorScheme = useColorScheme();
+
+  return (
+    <BottomTab.Navigator
+      initialRouteName="TabThree"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerRight: (props) => (
+          <View>
+            <Link style={[styles.auth, { backgroundColor: "#111" }]} to={{ screen: "Auth" }}>
+              Iniciar Sesion
+            </Link>
+          </View>
+        ),
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 0,
+          left: 20,
+          right: 20,
+          elevation: 0,
+          borderRadius: 15,
+          height: 70,
+          backgroundColor: "#333",
+          paddingBottom: 5,
+        },
+      }}
+    >
+      {/* Buttons */}
+      {/* <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
@@ -134,53 +174,69 @@ function BottomTabNavigator() {
           ),
         })}
       /> */}
-            <BottomTab.Screen
-                name="TabTwo"
-                component={Fiados}
-                options={{
-                    title: "Fiados",
-                    tabBarIcon: ({ color }) => <TabBarIcon name="handshake-o" color={color} />,
-                }}
-            />
-            <BottomTab.Screen
-                name="TabThree"
-                component={Ventas}
-                options={{
-                    title: "Ventas",
-                    tabBarIcon: ({ color }) => <TabBarIcon name="dollar" color={color} />,
-                }}
-            />
-            <BottomTab.Screen
-                name="TabFour"
-                component={Estadisticas}
-                options={{
-                    title: "Estadísticas",
-                    tabBarIcon: ({ color }) => (
-                        <Ionicons size={25} style={{ marginBottom: -3 }} name="stats-chart" color={color} />
-                    ),
-                }}
-            />
-            <BottomTab.Screen
-                name="TabFive"
-                component={Productos}
-                options={{
-                    title: "Productos/Stock",
-                    tabBarIcon: ({ color }) => <TabBarIcon name="table" color={color} />,
-                }}
-            />
-        </BottomTab.Navigator>
-    );
+      <BottomTab.Screen
+        name="TabTwo"
+        component={Fiados}
+        options={{
+          title: "Fiados",
+          tabBarIcon: ({ color }) => <TabBarIcon name="handshake-o" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={Ventas}
+        options={{
+          title: "Ventas",
+          tabBarIcon: ({ color }) => <TabBarIcon name="dollar" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabFour"
+        component={Ventas}
+        options={{
+          //@ts-ignore
+          tabBarIcon: ({ color }) => <TabBarIcon style={{ fontSize: 30 }} name="plus" color={color} />,
+          tabBarButton: (props) => <CustomTabBarButton {...props}></CustomTabBarButton>,
+          // tabBarShowLabel: false, //does not working
+          tabBarLabel: "",
+          tabBarLabelStyle: {
+            height: 0,
+            width: 0,
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name="TabFive"
+        component={Estadisticas}
+        options={{
+          title: "Estadísticas",
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={25} style={{ marginBottom: -3 }} name="stats-chart" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        //@ts-ignore
+        name="TabSix"
+        component={Productos}
+        options={{
+          title: "Productos/Stock",
+          tabBarIcon: ({ color }) => <TabBarIcon name="table" color={color} />,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
 }
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
-    return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
 }
 
 const styles = StyleSheet.create({
-    auth: {
-        color: "white",
-    },
+  auth: {
+    color: "white",
+  },
 });
