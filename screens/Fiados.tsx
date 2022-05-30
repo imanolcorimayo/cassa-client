@@ -11,14 +11,26 @@ import Ordenar from "../components/Generales/Ordenar";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getTrusted } from "../redux/actions";
+import { getTrusted, setScreenState } from "../redux/actions";
+
+// React navigation
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Fiados({ navigation }: RootTabScreenProps<"TabTwo">) {
   const dispatch = useDispatch();
   const trusted = useSelector((state: any) => state.trusted);
+
+  // Get all trusted persons by user registered
   React.useEffect(() => {
     dispatch(getTrusted());
   }, []);
+
+  // Used to change the function of the PLUS tab bottom bar button
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(setScreenState("trust"));
+    }, [])
+  );
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   return (
     <View style={styles.container}>

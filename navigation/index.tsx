@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, StyleSheet, TouchableOpacity } from "react-native";
+import { ColorSchemeName, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 
 // React Navigation
 import { Link } from "@react-navigation/native";
@@ -29,6 +29,10 @@ import { View } from "../components/Themed";
 import Auth from "../screens/Auth";
 import AddSale from "../screens/sales/AddSale";
 import SelectProduct from "../screens/sales/SelectProduct";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts, showProductModal } from "../redux/actions";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -95,6 +99,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 const CustomTabBarButton = ({ children, onPress }: any) => {
+  const screen = useSelector((state: any) => state.screen);
   return (
     <TouchableOpacity
       style={{
@@ -109,7 +114,7 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
           width: 65,
           height: 65,
           borderRadius: 35,
-          backgroundColor: "rgba(127, 182, 133, 1)",
+          backgroundColor: screen == "trust" ? "#92AFD7" : "rgba(127, 182, 133, 1)",
           shadowColor: "#fff",
           shadowOffset: { width: 5, height: 10 },
           shadowOpacity: 1,
@@ -125,6 +130,11 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const screen = useSelector((state: any) => state.screen);
+
+  React.useEffect(() => {
+    console.log(screen);
+  }, [screen]);
 
   return (
     <BottomTab.Navigator
@@ -196,10 +206,16 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFour"
-        component={Ventas}
+        component={screen == "trust" ? Fiados : Ventas}
         options={{
-          //@ts-ignore
-          tabBarIcon: ({ color }) => <TabBarIcon style={{ fontSize: 30 }} name="plus" color={"rgba(66, 106, 90, 1)"} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon
+              //@ts-ignore
+              style={{ fontSize: 30 }}
+              name="plus"
+              color={screen == "trust" ? "#5A7684" : "rgba(66, 106, 90, 1)"}
+            />
+          ),
           tabBarButton: (props) => <CustomTabBarButton {...props}></CustomTabBarButton>,
           // tabBarShowLabel: false, //does not working
           tabBarLabel: "",

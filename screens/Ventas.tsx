@@ -12,7 +12,10 @@ import SellDetails from "../components/Ventas/SellDetails";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getSales } from "../redux/actions";
+import { getSales, setScreenState } from "../redux/actions";
+
+// React navigation
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 interface globalState {
   sales: Array<Object>;
@@ -39,10 +42,18 @@ export default function Ventas({ navigation }: RootTabScreenProps<"TabThree">) {
       dispatch(getSales());
     }
   }, []);
+  // Used to change the function of the PLUS tab bottom bar button
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(setScreenState("sell"));
+    }, [])
+  );
+  const foc = useIsFocused();
   return (
     <View style={styles.container}>
       <SellDetails></SellDetails>
       <Ordenar></Ordenar>
+      <Text>{foc ? "some" : "else"}</Text>
       <ScrollView style={styles.containerScroll}>
         {sales.map((el: any, index: any) => {
           return (
