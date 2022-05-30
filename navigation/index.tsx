@@ -98,7 +98,7 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
   return (
     <TouchableOpacity
       style={{
-        top: -30,
+        top: -20,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -114,7 +114,7 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
           shadowOffset: { width: 5, height: 10 },
           shadowOpacity: 1,
           shadowRadius: 5,
-          elevation: 3,
+          elevation: 2.5,
         }}
       >
         {children}
@@ -224,7 +224,7 @@ function BottomTabNavigator() {
         name="TabSix"
         component={Productos}
         options={{
-          title: "Productos/Stock",
+          title: "Stock",
           tabBarIcon: ({ color }) => <TabBarIcon name="table" color={color} />,
         }}
       />
