@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import React from "react";
 
 import { RootTabScreenProps } from "../types";
@@ -6,18 +6,26 @@ import { RootTabScreenProps } from "../types";
 // Components
 import { View, Text } from "../components/Themed";
 import { Alert, Button } from "react-native";
+import TopButtons from "../components/TopButtons";
+
+// React Navigation
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { getSales, setScreenState } from "../redux/actions";
 
 export default function Fiados({ navigation }: RootTabScreenProps<"TabFour">) {
+  const dispatch = useDispatch();
+  // Used to change the function of the PLUS tab bottom bar button
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(setScreenState("sell"));
+    }, [])
+  );
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <View style={styles.button}>
-          <Button title="Ingresos" onPress={() => Alert.alert("Button with adjusted color pressed")} />
-        </View>
-        <View style={styles.button}>
-          <Button title="Gastos" onPress={() => Alert.alert("Button with adjusted color pressed")} />
-        </View>
-      </View>
+      <TopButtons firstButton="Ingresos" secondButton="Gastos" />
       <Text style={styles.subTitles}>Resumen de ventas</Text>
       <Text style={styles.subTitles}>Ventas</Text>
       <Text style={styles.subTitles}>Clientes y productos mas vendidos</Text>
@@ -26,7 +34,11 @@ export default function Fiados({ navigation }: RootTabScreenProps<"TabFour">) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    backgroundColor: "#111",
+    height: Dimensions.get("window").height,
+    padding: 20,
+  },
   button: {
     width: 150,
   },

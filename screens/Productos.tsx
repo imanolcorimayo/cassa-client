@@ -8,14 +8,17 @@ import { ScrollView, Button, Alert, Dimensions, Pressable, StyleSheet, Modal, Te
 import { View, Text } from "../components/Themed";
 import Producto from "../components/Productos/Producto";
 import Categories from "../components/Productos/Categories";
-import Ordenar from "../components/Generales/Ordenar";
+import TopButtons from "../components/TopButtons";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, showProductModal } from "../redux/actions";
+import { getProducts, setScreenState, showProductModal } from "../redux/actions";
 
 // Colors
 import Colors from "../constants/Colors";
+
+// React navigation
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 interface Product {
   buy_unit: String;
@@ -77,6 +80,13 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
       }).start();
     }
   };
+
+  // Used to change the function of the PLUS tab bottom bar button
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(setScreenState("sell"));
+    }, [])
+  );
 
   const [visible, setVisible] = React.useState(false);
   return (
@@ -157,22 +167,7 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
           <Text>Añadir producto</Text>
         </Pressable>
       </View> */}
-      <View style={styles.topButtonsContainer}>
-        <View style={styles.topButtons}>
-          <Button
-            title="Productos/Stock"
-            color={Colors.primaryDark.tint}
-            onPress={() => Alert.alert("Button with adjusted color pressed")}
-          />
-        </View>
-        <View style={styles.topButtons}>
-          <Button
-            title="Historial"
-            color={Colors.primaryDark.tint}
-            onPress={() => Alert.alert("Button with adjusted color pressed")}
-          />
-        </View>
-      </View>
+      <TopButtons firstButton="Productos/Stock" secondButton="Historial" />
 
       <View style={styles.input}>
         {/* @ts-ignore */}
@@ -240,6 +235,11 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#111",
+    height: Dimensions.get("window").height,
+    padding: 20,
+  },
   // MODAL
 
   // Details Container
@@ -325,11 +325,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   // MODAL
-  container: {
-    backgroundColor: "#111",
-    height: Dimensions.get("window").height,
-    padding: 20,
-  },
   topButtonsContainer: {
     display: "flex",
     flexDirection: "row",
