@@ -23,7 +23,7 @@ export function getProducts() {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 }
@@ -39,7 +39,7 @@ export function getSales() {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 }
@@ -76,7 +76,7 @@ export function getTrusted() {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 }

@@ -114,7 +114,7 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
           width: 65,
           height: 65,
           borderRadius: 35,
-          backgroundColor: screen == "trust" ? "#92AFD7" : "rgba(127, 182, 133, 1)",
+          backgroundColor: screen == "trust" ? "#92AFD7" : Colors.primary.tint,
           shadowColor: "#fff",
           shadowOffset: { width: 5, height: 10 },
           shadowOpacity: 1,
@@ -131,10 +131,6 @@ const CustomTabBarButton = ({ children, onPress }: any) => {
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const screen = useSelector((state: any) => state.screen);
-
-  React.useEffect(() => {
-    console.log(screen);
-  }, [screen]);
 
   return (
     <BottomTab.Navigator
@@ -213,7 +209,7 @@ function BottomTabNavigator() {
               //@ts-ignore
               style={{ fontSize: 30 }}
               name="plus"
-              color={screen == "trust" ? "#5A7684" : "rgba(66, 106, 90, 1)"}
+              color={screen == "trust" ? "#5A7684" : Colors.primaryDark.tint}
             />
           ),
           tabBarButton: (props) => <CustomTabBarButton {...props}></CustomTabBarButton>,

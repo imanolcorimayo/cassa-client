@@ -14,6 +14,9 @@ import Ordenar from "../components/Generales/Ordenar";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, showProductModal } from "../redux/actions";
 
+// Colors
+import Colors from "../constants/Colors";
+
 interface Product {
   buy_unit: String;
   createdAt: String;
@@ -158,14 +161,14 @@ export default function Productos({ navigation }: RootTabScreenProps<"TabThree">
         <View style={styles.topButtons}>
           <Button
             title="Productos/Stock"
-            color={"rgba(66, 106, 90, 1)"}
+            color={Colors.primaryDark.tint}
             onPress={() => Alert.alert("Button with adjusted color pressed")}
           />
         </View>
         <View style={styles.topButtons}>
           <Button
             title="Historial"
-            color={"rgba(66, 106, 90, 1)"}
+            color={Colors.primaryDark.tint}
             onPress={() => Alert.alert("Button with adjusted color pressed")}
           />
         </View>
@@ -310,7 +313,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonClose: {
-    backgroundColor: "rgba(66, 106, 90, 1)",
+    backgroundColor: Colors.primaryDark.tint,
   },
   textStyle: {
     color: "white",
@@ -370,7 +373,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: Dimensions.get("window").width * 0.7,
-    backgroundColor: "rgba(66, 106, 90, 1)",
+    backgroundColor: Colors.primaryDark.tint,
     height: 40,
     display: "flex",
     alignItems: "center",

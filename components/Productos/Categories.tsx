@@ -9,6 +9,9 @@ import { useDispatch } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+// Colors
+import Colors from "../../constants/Colors";
+
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
   return <FontAwesome size={25} {...props} />;
 }
@@ -47,7 +50,7 @@ export default function Categories() {
               >
                 <MaterialIcons
                   name={index % 2 == 0 ? "apple" : "fruit-cherries"}
-                  color={"rgba(127, 182, 133, 1)"}
+                  color={Colors.primary.tint}
                   style={{
                     textShadowColor: "rgba(236, 236, 236, 0.3)",
                     textShadowOffset: { width: 0, height: 0 },

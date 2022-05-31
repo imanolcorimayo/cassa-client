@@ -6,6 +6,9 @@ import { StyleSheet, Button, Alert, Image, Pressable } from "react-native";
 import { showProductModal } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
+// Colors
+import Colors from "../../constants/Colors";
+
 interface Props {
   id: Number;
   name: String;
@@ -57,7 +60,7 @@ export default function Producto(props: Props) {
           <Text style={styles.text}>19 Julio de 2022</Text>
           <View
             style={{
-              backgroundColor: "rgba(127, 182, 133, 1)",
+              backgroundColor: Colors.primary.tint,
               height: "100%",
               flex: 0.4,
               display: "flex",
