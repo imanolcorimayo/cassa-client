@@ -5,8 +5,8 @@ import Colors from "../constants/Colors";
 import { Text, View } from "./Themed";
 
 interface Props {
-  firstButton: String;
-  secondButton: String;
+  firstButton: string;
+  secondButton: string;
 }
 
 export default function TopButtons(props: Props) {
